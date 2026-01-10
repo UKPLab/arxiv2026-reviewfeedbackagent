@@ -1,116 +1,167 @@
-<p  align="center">
-  <img src='logo.png' width='200'>
+# Reviewing the Reviewer: Elevating Peer Review Quality through LLM-Guided Feedback
+
+[![Arxiv](https://img.shields.io/badge/Arxiv-2508.05283-red?style=flat&logo=arxiv&logoColor=white)](https://www.arxiv.org/abs/2508.05283)
+[![License](https://img.shields.io/github/license/UKPLab/ukp-project-template)](https://opensource.org/licenses/Apache-2.0)
+[![Python Versions](https://img.shields.io/badge/Python-3.10-blue.svg?style=flat&logo=python&logoColor=white)](https://www.python.org/)
+>  **Abstract**
+>
+> Peer review is central to scientific quality, yet reliance on simple heuristics—\textit{lazy thinking}—has lowered standards. Prior work treats lazy thinking detection as a single-label task, but review segments may exhibit multiple issues, including broader clarity problems, or \textit{specificity} issues. Turning detection into actionable improvements requires guideline-aware feedback, which is currently missing. We introduce an LLM-driven framework that decomposes reviews into argumentative segments, identifies issues via a neurosymbolic module combining LLM features with traditional classifiers, and generates targeted feedback using issue-specific templates refined by a genetic algorithm. Experiments show our method outperforms zero-shot LLM baselines and improves review quality by up to 92.4\%. We also release **LazyReviewPlus**, a dataset of 1,309 sentences labeled for *lazy thinking* and *specificity*.
+>
+This repository contains the code to reproduce the experiments in our paper, **"Reviewing the Reviewer: Elevating Peer Review Quality through LLM-Guided Feedback"**. 
+
+<p align="center">
+<img src="assets/feedback_generation_overview_logo.png" width="500">
 </p>
 
-# arxiv2025_reviewfeedbackagent
-[![Arxiv](https://img.shields.io/badge/Arxiv-YYMM.NNNNN-red?style=flat-square&logo=arxiv&logoColor=white)](https://put-here-your-paper.com)
-[![License](https://img.shields.io/github/license/UKPLab/arxiv2025-reviewfeedbackagent)](https://opensource.org/licenses/Apache-2.0)
-[![Python Versions](https://img.shields.io/badge/Python-3.9-blue.svg?style=flat&logo=python&logoColor=white)](https://www.python.org/)
-[![CI](https://github.com/UKPLab/arxiv2025-reviewfeedbackagent/actions/workflows/main.yml/badge.svg)](https://github.com/UKPLab/arxiv2025-reviewfeedbackagent/actions/workflows/main.yml)
 
-This is the official template for new Python projects at UKP Lab. It was adapted for the needs of UKP Lab from the excellent [python-project-template](https://github.com/rochacbruno/python-project-template/) by [rochacbruno](https://github.com/rochacbruno).
-
-It should help you start your project and give you continuous status updates on the development through [GitHub Actions](https://docs.github.com/en/actions).
-
-> **Abstract:** The study of natural language processing (NLP) has gained increasing importance in recent years, with applications ranging from machine translation to sentiment analysis. Properly managing Python projects in this domain is of paramount importance to ensure reproducibility and facilitate collaboration. The template provides a structured starting point for projects and offers continuous status updates on development through GitHub Actions. Key features include a basic setup.py file for installation, packaging, and distribution, documentation structure using mkdocs, testing structure using pytest, code linting with pylint, and entry points for executing the program with basic CLI argument parsing. Additionally, the template incorporates continuous integration using GitHub Actions with jobs to check, lint, and test the project, ensuring robustness and reliability throughout the development process.
-
-Contact person: [Federico Tiblias](mailto:federico.tiblias@tu-darmstadt.de) 
+Contact person: [Sukannya Purkayastha](mailto:sukannya.purkayastha@tu-darmstadt.de)
 
 [UKP Lab](https://www.ukp.tu-darmstadt.de/) | [TU Darmstadt](https://www.tu-darmstadt.de/
 )
 
 Don't hesitate to send us an e-mail or report an issue, if something is broken (and it shouldn't be) or if you have further questions.
 
+> This repository contains experimental software and is published for the sole purpose of giving additional background details on the respective publication.
 
-## Getting Started
 
-> **DO NOT CLONE OR FORK**
 
-If you want to set up this template:
-
-1. Request a repository on UKP Lab's GitHub by following the standard procedure on the wiki. It will install the template directly. Alternatively, set it up in your personal GitHub account by clicking **[Use this template](https://github.com/rochacbruno/python-project-template/generate)**.
-2. Wait until the first run of CI finishes. Github Actions will commit to your new repo with a "✅ Ready to clone and code" message.
-3. Delete optional files: 
-    - If you don't need automatic documentation generation, you can delete folder `docs`, file `.github\workflows\docs.yml` and `mkdocs.yml`
-    - If you don't want automatic testing, you can delete folder `tests` and file `.github\workflows\tests.yml`
-    - If you do not wish to have a project page, delete folder `static` and files `.nojekyll`, `index.html`
-4. Prepare a virtual environment:
+## Setup and WorkFlow
+For running the experiments, one needs to install necessary packages that we provide in the ``requirements.txt`` file as below:
+>
 ```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install .
-pip install -r requirements-dev.txt # Only needed for development
+$ conda create -n reviewing_reviewer python=3.10
+$ conda activate reviewing_reviewer
+$ pip install -r requirements.txt
 ```
-5. Adapt anything else (for example this file) to your project. 
+>
 
-6. Read the file [ABOUT_THIS_TEMPLATE.md](ABOUT_THIS_TEMPLATE.md)  for more information about development.
+### Experiments
+Our method comprises of three stages of processing: *Segment Detection of Reviews*, *Issue Detection* and *Feedback Generation*.
 
-## Usage
 
-### Using the classes
+### Segment Identification of Reviews
+We first segment a review into argumentative units using zero-shot prompting LLMs. Each sentence of the review is input to the LLM and it needs to output B (begin), I (inside) and O (outside / other) tags.
 
-To import classes/methods of `arxiv2025_reviewfeedbackagent` from inside the package itself you can use relative imports: 
+#### Sequential segmentation
+The setup where prior predictions of the LLM is input to the model to make the current prediction.
 
-```py
-from .base import BaseClass # Notice how I omit the package name
+> python src/segmentation/sequential.py \
+    --data_path ARR2022.tsv \
+    --model 'microsoft/phi-4' \
+    --output_path path/to/output_file.tsv
 
-BaseClass().something()
+- **`--data_path`**: Path to the input file. Note that although the help message says CSV, the code uses `sep='\t'`, so it expects a TSV file containing columns like `Review`, `Sentence`, `Section`, etc.
+- **`--model`**: The HuggingFace model ID (e.g., `microsoft/phi-4`) or a local path to the model weights.
+- **`--output_path`**: The file path where the resulting predictions and classification metrics will be saved.
+
+#### Standalone segmentation
+ This is the setup where the model independently tags the sentences with B, I or O without looking at the prior predictions.
+
+> python src/segmentation/standalone.py \
+    --data_path ARR2022.tsv \
+    --model 'microsoft/phi-4' \
+    --output_path path/to/output_file.tsv
+
+All the arguments are same as in sequential segmentation.
+
+### Issue Detection
+
+
+
+
+
+### Feedback Generation
+
+#### Genetic Algorithm
+The code to run the proposed genetic algorithm-based feedback generation method is as follows:
+```bash
+python src/feedback_generation/genetic_algo.py \
+    --llm_model "microsoft/phi-4" \
+    --review_segment "The paper dedicates substantial space to
+theoretical background while the experimental section is
+relatively weak with only the Gemma model being tested, without
+considering the performance of other models such as GPT4" \
+    --issue '''The authors should compare
+to a 'closed' model X''' \
+  --template "The reviewer should explicitly mention which baselines are missing and why they are important for validating the claims." \
+  --n_candidates 10 \
+  --n_generations 3 \
+  --n_parents 5
 ```
+- **`--llm_model`**: The HuggingFace model ID (e.g., `microsoft/phi-4`) or local path to the model weights.
+- **`--review_segment`**: The specific text from a peer review that contains the issue.
+- **`--issue`**: The label of the identified issue.
+- **`--summary`**: (Optional) A summary of the paper being reviewed.
+- **`--strengths`**: (Optional) Noted strengths of the paper.
+- **`--template`**: The feedback template or guideline corresponding to the identified issue.
+- **`--n_candidates`**: Number of initial feedback candidates to generate.
+- **`--n_generations`**: Number of evolutionary generations to run.
+- **`--n_parents`**: Number of parents selected for crossover in each generation.
 
-To import classes/methods from outside the package (e.g. when you want to use the package in some other project) you can instead refer to the package name:
-
-```py
-from arxiv2025_reviewfeedbackagent import BaseClass # Notice how I omit the file name
-from arxiv2025_reviewfeedbackagent.subpackage import SubPackageClass # Here it's necessary because it's a subpackage
-
-BaseClass().something()
-SubPackageClass().something()
-```
-
-### Using scripts
-
-This is how you can use `arxiv2025_reviewfeedbackagent` from command line:
+#### Baselines
+All the baselines used in our paper can be run with the following commands.
 
 ```bash
-$ python -m arxiv2025_reviewfeedbackagent
+python src/feedback_generation/baselines.py \
+  --llm_model "microsoft/phi-4" \
+  --review_segment "The paper dedicates substantial space to
+theoretical background while the experimental section is
+relatively weak with only the Gemma model being tested, without
+considering the performance of other models such as GPT4" \
+  --issue '''The authors should compare
+to a 'closed' model X''' \
+--template "The reviewer should explicitly mention which baselines are missing and why they are important for validating the claims." \
+--baseline "all" \
+--n 5 \
+--n_gen 3 
 ```
+- **`--llm_model`**: The HuggingFace model ID (e.g., `microsoft/phi-4`, `meta-llama/Llama-2-7b-chat-hf`) or local path to the model weights.
+- **`--review_segment`**: The specific text from a peer review that contains the issue.
+- **`--issue`**: The label of the identified issue (e.g., `missing_comparison`).
+- **`--template`**: The feedback template or guideline corresponding to the identified issue.
+- **`--baseline`**: Specifies which baseline strategy to execute (`1-pass`, `Temp`, `Plan`, `BoN`, `Self-Ref.`, or `all`).
+- **`--n`**: The number of candidates to generate (used specifically for `BoN` and `Self-Ref.` baselines).
+- **`--n_gen`**: The number of generations or refinement steps (used for `BoN` and `Self-Ref.`).
 
-### Expected results
+#### Evaluation
 
-After running the experiments, you should expect the following results:
-
-(Feel free to describe your expected results here...)
-
-### Parameter description
-
-* `x, --xxxx`: This parameter does something nice
-
-* ...
-
-* `z, --zzzz`: This parameter does something even nicer
-
-## Development
-
-Read the FAQs in [ABOUT_THIS_TEMPLATE.md](ABOUT_THIS_TEMPLATE.md) to learn more about how this template works and where you should put your classes & methods. Make sure you've correctly installed `requirements-dev.txt` dependencies
-
-## Cite
-
-Please use the following citation:
-
+```bash
+python src/feedback_generation/prometheus_eval/eval.py \
+    --input_path path/to/input_file.tsv \
+    --output_path path/to/output_file \
+    --model_name "prometheus-eval/prometheus-7b-v2.0" \
+    --prompt_type "genetic_algo" \
+    --max_new_tokens 512 \
+    --batch_size 16
 ```
-@InProceedings{smith:20xx:CONFERENCE_TITLE,
-  author    = {Smith, John},
-  title     = {My Paper Title},
-  booktitle = {Proceedings of the 20XX Conference on XXXX},
-  month     = mmm,
-  year      = {20xx},
-  address   = {Gotham City, USA},
-  publisher = {Association for XXX},
-  pages     = {XXXX--XXXX},
-  url       = {http://xxxx.xxx}
+- **`--input_path`**: Path to the input TSV file containing generated feedback. Must contain `Review Segment` and `outputs` columns. `outputs` is the generated feedback.
+- **`--output_path`**: Path prefix for the output CSV file where evaluation scores will be saved.
+- **`--model_name`**: The HuggingFace model ID for the evaluator model (e.g., `prometheus-eval/prometheus-7b-v2.0`).
+- **`--prompt_type`**: A label for the type of prompt or method being evaluated (e.g., `genetic_algo`, `baseline`).
+- **`--max_new_tokens`**: Maximum number of tokens to generate for the evaluation (default: 512).
+- **`--batch_size`**: Batch size for inference (default: 16).
+
+## Models
+The models used in our paper are:
+In our paper, we performed experiments with the following models:
+
+| Name                     | Sizes | 🤗 Model Links |
+| :---:                     | :---: | :---: |
+| Qwen 2.5 7B Instruct     | 7B    | [Qwen-2.5-7B-Instruct](https://huggingface.co/Qwen/Qwen2.5-7B-Instruct) |
+| Yi 1.5 9B Chat           | 9B    | [Yi-1.5-9B-Chat](https://huggingface.co/01-ai/Yi-1.5-9B-Chat) |
+| Deepseek LLM 7B Chat     | 7B    | [Deepseek-7B-Chat](https://huggingface.co/deepseek-ai/deepseek-llm-7b-chat) |
+| Phi-4 14B                 | 14B   | [Phi-4-14B](https://huggingface.co/microsoft/phi-4) |
+| GPT OSS 20B               | 20B   | [GPT-OSS-20B](https://huggingface.co/openai/GPT-OSS-20B) |
+
+The Prometheus models we experimented with are: https://huggingface.co/prometheus-eval/prometheus-7b-v2.0
+
+
+## Citation
+
+```bib
+@misc{
+  
 }
 ```
 
-## Disclaimer
 
-> This repository contains experimental software and is published for the sole purpose of giving additional background details on the respective publication. 
