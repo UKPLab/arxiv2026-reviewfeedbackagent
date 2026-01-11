@@ -65,6 +65,7 @@ The setup where prior predictions of the LLM is input to the model to make the c
 All the arguments are same as in sequential segmentation.
 
 ### Issue Detection
+T
 The issue detection stage consists of three steps: extracting abstract features from review segments, generating feature vectors, and training ML classifiers to identify issues.
 
 #### Abstract Feature Extraction
@@ -72,12 +73,12 @@ The issue detection stage consists of three steps: extracting abstract features 
 Extract abstract, high-level features (as Yes/No questions) that determine whether a review segment reflects a specific issue using an LLM.
 
 ```bash
-python src/Issue_Detection/Abstract_feature_extraction.py \
-    --data_file path/to/issue_to_segments.pkl \
+python src/Issue\ Detection/Abstract_feature_extraction.py \
+    --data_file path/to/review_data.tsv \
     --llm_name "microsoft/phi-4"
 ```
 
-- **`--data_file`**: Path to the pickle file containing issue-to-segments mapping. Expected format: dictionary where keys are issue types and values are lists of review segments.
+- **`--data_file`**: Path to the TSV file containing review data. Must include columns `Review Segment` and `Combined Issue Types`.
 - **`--llm_name`**: The HuggingFace model ID (e.g., `microsoft/phi-4`) or local path to the model weights.
 
 Output: A pickle file named `abstract_features_{safe_llm_name}.pkl` containing extracted features for each issue type.
@@ -87,12 +88,14 @@ Output: A pickle file named `abstract_features_{safe_llm_name}.pkl` containing e
 Generate feature vectors for review segments by evaluating them against the extracted abstract features using an LLM.
 
 ```bash
-python src/Issue_Detection/Feature_vector_generation.py \
-    --data_file path/to/data.tsv \
+python src/Issue\ Detection/Feature_vector_generation.py \
+    --data_file path/to/review_data.tsv \
+    --feature_questions_file path/to/abstract_features_{llm_name}.pkl \
     --llm_name "microsoft/phi-4"
 ```
 
-- **`--data_file`**: Path to the TSV file containing review data. Must include columns `Review Segment` and `Combined Issue Types`.
+- **`--data_file`**: Path to the TSV file containing review data. Must include column `Review Segment`.
+- **`--feature_questions_file`**: Path to the pickle file containing abstract features (output from Abstract_feature_extraction.py).
 - **`--llm_name`**: The HuggingFace model ID (e.g., `microsoft/phi-4`) or local path to the model weights.
 
 Output: A TSV file named `full-{safe_llm_name}-advanced_features.tsv` containing the original data with an additional `feature_vectors` column.
@@ -102,18 +105,20 @@ Output: A TSV file named `full-{safe_llm_name}-advanced_features.tsv` containing
 Train and evaluate ML classifiers for multi-label issue classification using the generated feature vectors.
 
 ```bash
-python src/Issue_Detection/ML_model_classification.py \
-    --data_file path/to/data.tsv \
-    --feature_vectors_file path/to/feature_vectors.tsv \
+python src/Issue\ Detection/ML_model_classification.py \
+    --data_file path/to/review_data.tsv \
+    --feature_vectors_file path/to/full-{llm_name}-advanced_features.tsv \
+    --issue_to_segments_file path/to/abstract_features_{llm_name}.pkl \
     --llm_name "microsoft/phi-4"
 ```
 
-- **`--data_file`**: Path to the TSV file containing review data with issue labels.
+- **`--data_file`**: Path to the TSV file containing review data with issue labels. Must include columns `Review Segment`, `Combined Issue Types`, and `ID`.
 - **`--feature_vectors_file`**: Path to the TSV file containing feature vectors (output from Feature_vector_generation.py).
+- **`--issue_to_segments_file`**: Path to the pickle file containing abstract features (output from Abstract_feature_extraction.py).
 - **`--llm_name`**: The HuggingFace model ID (e.g., `microsoft/phi-4`) or local path to the model weights used for feature generation.
 
 The script performs the following:
-- Extracts and decompose issue types
+- Extracts and normalizes issue types
 - Stratified group-aware train-test split
 - Cross-validation with multiple classifiers (Logistic Regression, Random Forest, SVM, Neural Networks, etc.)
 - Evaluation using F0.5 score, precision, and recall metrics
