@@ -34,6 +34,9 @@ $ conda activate reviewing_reviewer
 $ pip install -r requirements.txt
 ```
 >
+### Data
+The dataset, LazyReviewPlus is available in the folder ```LazyReviewPlus``` in this repository.
+
 
 ### Experiments
 Our method comprises of three stages of processing: *Segment Detection of Reviews*, *Issue Detection* and *Feedback Generation*.
