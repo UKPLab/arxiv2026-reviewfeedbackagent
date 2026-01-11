@@ -72,7 +72,7 @@ The issue detection stage consists of three steps: extracting abstract features 
 Extract abstract, high-level features (as Yes/No questions) that determine whether a review segment reflects a specific issue using an LLM.
 
 ```bash
-python src/Issue\ Detection/Abstract_feature_extraction.py \
+python src/Issue_Detection/Abstract_feature_extraction.py \
     --data_file path/to/issue_to_segments.pkl \
     --llm_name "microsoft/phi-4"
 ```
@@ -87,7 +87,7 @@ Output: A pickle file named `abstract_features_{safe_llm_name}.pkl` containing e
 Generate feature vectors for review segments by evaluating them against the extracted abstract features using an LLM.
 
 ```bash
-python src/Issue\ Detection/Feature_vector_generation.py \
+python src/Issue_Detection/Feature_vector_generation.py \
     --data_file path/to/data.tsv \
     --llm_name "microsoft/phi-4"
 ```
@@ -102,7 +102,7 @@ Output: A TSV file named `full-{safe_llm_name}-advanced_features.tsv` containing
 Train and evaluate ML classifiers for multi-label issue classification using the generated feature vectors.
 
 ```bash
-python src/Issue\ Detection/ML_model_classification.py \
+python src/Issue_Detection/ML_model_classification.py \
     --data_file path/to/data.tsv \
     --feature_vectors_file path/to/feature_vectors.tsv \
     --llm_name "microsoft/phi-4"
