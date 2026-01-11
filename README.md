@@ -35,7 +35,7 @@ $ pip install -r requirements.txt
 ```
 >
 ### Data
-The dataset, LazyReviewPlus is available in the folder ```LazyReviewPlus``` in this repository.
+The dataset, LazyReviewPlus is available in the folder ```LazyReviewPlus``` in this repository. The templates created by us for each of the issues is provided in the same folder named ```template_knowledge.json```.
 
 
 ### Experiments
