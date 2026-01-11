@@ -65,7 +65,6 @@ The setup where prior predictions of the LLM is input to the model to make the c
 All the arguments are same as in sequential segmentation.
 
 ### Issue Detection
-T
 The issue detection stage consists of three steps: extracting abstract features from review segments, generating feature vectors, and training ML classifiers to identify issues.
 
 #### Abstract Feature Extraction
@@ -81,7 +80,7 @@ python src/issue_detection/Abstract_feature_extraction.py \
 - **`--data_file`**: Path to the TSV file containing review data. Must include columns `Review Segment` and `Combined Issue Types`.
 - **`--llm_name`**: The HuggingFace model ID (e.g., `microsoft/phi-4`) or local path to the model weights.
 
-Output: A pickle file named `abstract_features_{safe_llm_name}.pkl` containing extracted features for each issue type.
+Output: A pickle file named `abstract_features_{safe_llm_name}.pkl` containing extracted features for each issue type. A issue_to_segment pkl file that map each issue to the review segments.
 
 #### Feature Vector Generation
 
@@ -118,7 +117,7 @@ python src/issue_detection/ML_model_classification.py \
 - **`--llm_name`**: The HuggingFace model ID (e.g., `microsoft/phi-4`) or local path to the model weights used for feature generation.
 
 The script performs the following:
-- Extracts and normalizes issue types
+- Extracts and decompose the features of issue types
 - Stratified group-aware train-test split
 - Cross-validation with multiple classifiers (Logistic Regression, Random Forest, SVM, Neural Networks, etc.)
 - Evaluation using F0.5 score, precision, and recall metrics
