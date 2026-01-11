@@ -1,0 +1,90 @@
+{
+    "H1. The results are not surprising": {
+        "Knowledge": "Paper summary",
+        "Template": "Your comment \u2014 \"[insert reviewer comment here]\" \u2014 suggests that the result is not surprising. While this may reflect your expertise, we encourage you to provide evidence or references (e.g., [references similar to title of the paper]) if this outcome is already known. What feels intuitive may not have been previously established, and empirical confirmation can still be a valuable contribution."
+    },
+    "H2. The results contradict what I would expect": {
+        "Knowledge": "Paper summary",
+        "Template": "Your comment \u2014 \"[insert reviewer comment here]\" \u2014 indicates that the results contradict your expectations. Please consider that this may reflect confirmation bias, where prior beliefs influence interpretation. It\u2019s important to evaluate empirical findings objectively, even if they challenge existing assumptions. We encourage you to focus on the evidence presented and discuss how these findings advance understanding, rather than dismissing them based on expectation."
+    },
+    "H3. The results are not novel": {
+        "Knowledge": "Paper summary + Abstract",
+        "Template": "Your comment \u2014 \"[insert reviewer comment here]\" \u2014 raises concerns about novelty. If you believe the work duplicates prior work, please provide specific references ( [references similar to title of the paper]) to support this claim (keeping in mind policies on concurrent work). If the paper\u2019s contribution is a reproduction, reimplementation, or analysis, please note that these are within the scope of the call and deserve fair consideration. Clear justification will help ensure the review is constructive and fair. "
+    },
+    "H4. This has no precedent in the existing literature": {
+        "Knowledge": "Paper summary",
+        "Template": "Your comment \u2014 \"[insert reviewer comment here]\" \u2014 indicates that the work has no clear precedent. While novelty is valuable, please be aware that highly novel contributions can be challenging to publish and may initially seem unfamiliar. Reviewers are encouraged to carefully consider the potential impact of innovative ideas rather than dismissing them due to lack of precedent. Providing constructive suggestions on how the authors can better frame or validate their novel contribution would be helpful."
+    },
+    "H5. The results do not surpass the latest SOTA": {
+        "Knowledge": "Template",
+        "Template": "Your comment \u2014 \"[insert reviewer comment here]\" \u2014 highlights that the results do not surpass the latest state-of-the-art (SOTA). Please keep in mind that achieving SOTA is neither necessary nor sufficient for a scientific contribution. Contributions improving other important aspects like efficiency, generalizability, interpretability, or fairness are also valuable. If the authors do not claim SOTA status, the lack of it should not be considered a weakness."
+    },
+    "H6. The results are negative": {
+        "Knowledge": "Template",
+        "Template": "Your comment \u2014 \"[insert reviewer comment here]\" \u2014 suggests the results are negative. Please consider that the bias toward publishing only positive results is a known issue across many fields. Negative or null results that show where methods systematically do not work are important for the community to understand limitations and avoid hype or overclaiming. Acknowledging the value of such findings can help make your review more balanced and constructive."
+    },
+    "H7. This method is too simple": {
+        "Knowledge": "Abstract",
+        "Template": "Your comment \u2014 \"[insert reviewer comment here]\" \u2014 suggests the method is too simple. However, the goal is to solve the problem effectively, not to add unnecessary complexity. Simpler methods often have advantages such as greater robustness, easier deployment, and better interpretability. Encouraging recognition of these benefits will help make your review more balanced and useful."
+    },
+    "H8. The paper doesn't use [my preferred methodology], e.g., deep learning": {
+        "Knowledge": "Abstract",
+        "Template": "Your comment \u2014 \"[insert reviewer comment here]\" \u2014 suggests a preference for a specific methodology (e.g., deep learning). Please note that NLP is an interdisciplinary field that values diverse contributions, including models, resources, surveys, data/linguistic/social analyses, theoretical work, and more. Limiting evaluation only to one methodology may overlook important advances. Recognizing this diversity will help make your review more comprehensive and fair."
+    },
+    "H9. The topic is too niche": {
+        "Knowledge": "Abstract",
+        "Template": "Your comment \u2014 \"[insert reviewer comment here]\" \u2014 suggests the topic is too niche. While the focus may be narrow, contributions to specific subfields can have significant impact and serve as important building blocks for the broader community. Recognizing the value of focused work helps ensure fair and balanced reviews."
+    },
+    "H10. The approach is tested only on [not English], so unclear if it will generalize to other languages": {
+        "Knowledge": "Template",
+        "Template": "Your comment \u2014 \"[insert reviewer comment here]\" \u2014 notes that the approach is tested only on [not English]. Please consider that monolingual research on any language is important both practically (developing methods and resources for that language) and theoretically (contributing to broader linguistic understanding). The NLP community values such focused contributions. Recognizing this helps ensure fair evaluation of research beyond English."
+    },
+    "H11. The paper has language errors": {
+        "Knowledge": "Template",
+        "Template": "Your comment \u2014 \"[insert reviewer comment here]\" \u2014 points out language errors. While clear writing is important, please prioritize the scientific content and contributions over minor language issues. Many papers can be improved with editorial help, but this should not overshadow the paper\u2019s value. Focusing on the core scientific merits will make your review more balanced and constructive."
+    },
+    "H12. The paper is missing the [reference X]": {
+        "Knowledge": "Template",
+        "Template": "Your comment \u2014 \"[insert reviewer comment here]\" \u2014 points out missing references. Please note ACL policy requires missing references to published highly relevant prior work that appeared at least three months before the submission deadline to be addressed seriously. Missing references to unpublished or very recent preprints should be treated as suggestions rather than critical flaws. Clarifying this distinction will help maintain fair and policy-compliant reviews."
+    },
+    "H13. The authors could also do [extra experiment X]": {
+        "Knowledge": "Abstract",
+        "Template": "Your comment \u2014 \"[insert reviewer comment here]\" \u2014 suggests additional experiments. While extra experiments can always be proposed, a paper only needs to provide sufficient evidence to support its claims. Additional experiments are generally considered \u201cnice-to-have\u201d and fit better in the suggestions section rather than as reasons for rejection. If you believe an extra experiment is essential for validity, please clearly justify why in your review."
+    },
+    "H14. \ud83c\udd95 The authors should compare to a 'closed' model X": {
+        "Knowledge": "Template",
+        "Template": "Your comment \u2014 \"[insert reviewer comment here]\" \u2014 requests comparisons to closed-source models (e.g., ChatGPT). Please consider that such comparisons are only meaningful if they directly support the paper\u2019s claims. Issues like test contamination and lack of transparency often limit their usefulness. Scientific progress often relies on openness and reproducibility, which closed models do not readily provide. Encouraging openness helps maintain rigorous evaluation standards."
+    },
+    "H15. The authors should have done [X] instead": {
+        "Knowledge": "Abstract",
+        "Template": "Your comment \u2014 \"[insert reviewer comment here]\" \u2014 suggests the authors should have done [X] instead. While multiple valid approaches often exist, this criticism is only warranted if the authors\u2019 choices prevent them from answering their research question, if their framing is misleading, or if the question itself lacks merit. Otherwise, such remarks are best framed as suggestions rather than weaknesses. Clarifying this distinction helps make your review fairer and more constructive."
+    },
+    "H16. Limitations != weaknesses": {
+        "Knowledge": "Template",
+        "Template": "Your comment \u2014 \"[insert reviewer comment here]\" \u2014 treats the paper\u2019s acknowledged limitations as weaknesses. While it\u2019s important to recognize limitations, they do not by themselves justify rejection. Most CL venues expect a Limitations section to promote transparency. If you believe a limitation seriously undermines the work, please clearly explain why. Distinguishing limitations from fatal flaws will improve the fairness and usefulness of your review."
+    },
+    "The paper is missing relevant references": {
+        "Knowledge": "Template",
+        "Template": "Your comment \u2014 \"[insert reviewer comment here]\" \u2014 needs to be rewritten by mentioning the exact references the authors are missing"
+    },
+    "X is not clear": {
+        "Knowledge": "Template",
+        "Template": "Your comment \u2014 \"[insert reviewer comment here]\" \u2014 needs to be rewritten by specifying the details that are exactly missing such as Y and Z are missing from the description of X.  "
+    },
+    "The formulation of X is wrong": {
+        "Knowledge": "Template",
+        "Template": "Your comment \u2014 \"[insert reviewer comment here]\" \u2014 needs to be rephrased as the formulation of X misses the component Y  "
+    },
+    "The contribution is not novel": {
+        "Knowledge": "Template",
+        "Template": "Your comment \u2014 \"[insert reviewer comment here]\" \u2014 needs to be rephrased as highly similar work X and Y has been published 3+ months prior to submission deadline    "
+    },
+    "The paper is missing recent baselines": {
+        "Knowledge": "Template",
+        "Template": "Your comment \u2014 \"[insert reviewer comment here]\" \u2014 needs to be rephrased as the proposed method should be compared against recent methods X, Y and Z     "
+    },
+    "X was done in the way Y": {
+        "Knowledge": "Template",
+        "Template": "Your comment \u2014 \"[insert reviewer comment here]\" \u2014 needs to be rephrased as X was done in the way Y which has the disadvantage Z  "
+    }
+}
