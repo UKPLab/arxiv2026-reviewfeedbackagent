@@ -7,14 +7,14 @@
 >
 > Peer review is central to scientific quality, yet reliance on simple heuristics—\textit{lazy thinking}—has lowered standards. Prior work treats lazy thinking detection as a single-label task, but review segments may exhibit multiple issues, including broader clarity problems, or \textit{specificity} issues. Turning detection into actionable improvements requires guideline-aware feedback, which is currently missing. We introduce an LLM-driven framework that decomposes reviews into argumentative segments, identifies issues via a neurosymbolic module combining LLM features with traditional classifiers, and generates targeted feedback using issue-specific templates refined by a genetic algorithm. Experiments show our method outperforms zero-shot LLM baselines and improves review quality by up to 92.4\%. We also release **LazyReviewPlus**, a dataset of 1,309 sentences labeled for *lazy thinking* and *specificity*.
 >
-This repository contains the code to reproduce the experiments in our paper, **"Reviewing the Reviewer: Elevating Peer Review Quality through LLM-Guided Feedback"**. We provide scripts to run ``segment identification``, ``issue detection``, and ``feedback generation``. The ``segment identification`` approach relies on zeros-shot prompting LLMs with different styles. The ``issue detection`` approach uses a combination of LLM features and traditional classifiers. The ``feedback generation`` approach uses a genetic algorithm-based framework that performs candidate generation, crossover, and mutation and then selection. We use five open source LLMs for each of the tasks as discussed later.
+This repository contains the code to reproduce the experiments in our paper, **"Reviewing the Reviewer: Elevating Peer Review Quality through LLM-Guided Feedback"**. We provide scripts to run ``segment identification``, ``issue detection``, and ``feedback generation`` that we performed for our paper on the newly developed **LazyReviewPlus** dataset. The ``segment identification`` approach relies on zeros-shot prompting LLMs with different styles. The ``issue detection`` approach uses a combination of LLM features and traditional classifiers. The ``feedback generation`` approach uses a genetic algorithm-based framework that performs candidate generation, crossover, and mutation and then selection. We use five open source LLMs for each of the tasks as discussed later.
 
 <p align="center">
 <img src="assets/feedback_generation_overview_logo.png" width="500">
 </p>
 
 
-Contact person: [Sukannya Purkayastha](mailto:sukannya.purkayastha@tu-darmstadt.de)
+Contact person: [Sukannya Purkayastha](mailto:sukannya.purkayastha@stud.tu-darmstadt.de)
 
 [UKP Lab](https://www.ukp.tu-darmstadt.de/) | [TU Darmstadt](https://www.tu-darmstadt.de/
 )
