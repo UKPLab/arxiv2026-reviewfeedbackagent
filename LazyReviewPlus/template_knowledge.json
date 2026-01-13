@@ -1,7 +1,7 @@
 {
     "H1. The results are not surprising": {
         "Knowledge": "Paper summary",
-        "Template": "Your comment \u2014 \"[insert reviewer comment here]\" \u2014 suggests that the result is not surprising. While this may reflect your expertise, we encourage you to provide evidence or references (e.g., [references similar to title of the paper]) if this outcome is already known. What feels intuitive may not have been previously established, and empirical confirmation can still be a valuable contribution."
+        "Template": "Your comment \u2014 \"[insert reviewer comment here]\" \u2014 suggests that the result is not surprising. While this may reflect your expertise, we encourage you to provide evidence or references, if this outcome is already known. What feels intuitive may not have been previously established, and empirical confirmation can still be a valuable contribution."
     },
     "H2. The results contradict what I would expect": {
         "Knowledge": "Paper summary",
@@ -9,7 +9,7 @@
     },
     "H3. The results are not novel": {
         "Knowledge": "Paper summary + Abstract",
-        "Template": "Your comment \u2014 \"[insert reviewer comment here]\" \u2014 raises concerns about novelty. If you believe the work duplicates prior work, please provide specific references ( [references similar to title of the paper]) to support this claim (keeping in mind policies on concurrent work). If the paper\u2019s contribution is a reproduction, reimplementation, or analysis, please note that these are within the scope of the call and deserve fair consideration. Clear justification will help ensure the review is constructive and fair. "
+        "Template": "Your comment \u2014 \"[insert reviewer comment here]\" \u2014 raises concerns about novelty. If you believe the work duplicates prior work, please provide specific references to support this claim (keeping in mind policies on concurrent work). If the paper\u2019s contribution is a reproduction, reimplementation, or analysis, please note that these are within the scope of the call and deserve fair consideration. Clear justification will help ensure the review is constructive and fair. "
     },
     "H4. This has no precedent in the existing literature": {
         "Knowledge": "Paper summary",
