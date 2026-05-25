@@ -72,7 +72,7 @@ def compute_fitness(feedback, template):
     forbidden_terms = ["hi", "hello", "thanks", "good job", "nice work", "great paper"]
     pen_forb = sum(feedback.lower().count(term) for term in forbidden_terms) / max(n_words, 1)
     
-    fitness = sc_len + sc_temp + sc_read - pen_forb
+    fitness = -sc_len + sc_temp + sc_read - pen_forb
     return fitness
 
 # -----------------------------
